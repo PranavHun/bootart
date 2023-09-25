@@ -15,6 +15,9 @@ mov dh,  24                     ;end of row
 mov dl,  79                     ;end of col
 int 0x10                        ;
 
+mov ah, 0x0
+mov al, 0x13                    ; SVGA 320x200
+int 0x10                
 
 cli                                     ; stop bios interrupts (to prevent messing while switching to 32 bit)
 lgdt [GDTable]                          ; load the GDT
@@ -78,26 +81,31 @@ GDTable:                            ;GDtable contains
 
 [bits 32]                           ;Changed to 32 as start of 32 bit code
 start_protected_mode:               ;Ring 0 sofar but out of real mode
-    mov bx, splash_message          ; pointer to variable defined below
-    mov ah, 0x34
-    mov ecx, 0xb87b2
+    mov ebx, 0                       ; pointer to variable defined below
+    mov ah, 0x04
+    mov dx, 0
+    mov ecx, 0x000A0000             ; Magic graphics address
 
     print_prompt:
-        mov al, [bx]                    ; load byte from memlocation in bx
-        cmp al, 0                       ; cmp for null termination
-        je done_print_prompt            ; quit if al == 0
-        mov [ecx], ax                   ; Interrupt 10h
-        inc cx                          ; next mem address in memoryVariable
-        inc cx                          ; next mem address in memoryVariable
-        inc bx                          ; next mem address in memoryVariable
-        jmp print_prompt                ; loop for next character
+        cmp ebx, 64000              ; 320x200 resolution, ah is pixel color
+        je done_print_prompt            
+        mov [ecx], ah  
+        cmp dx, 320
+        jne same_color
+        inc ah     
+        mov dx, 0            
+same_color:
+        inc cx                          
+        inc ebx                         
+        inc dx
+        jmp print_prompt                
 
     done_print_prompt:
 
     jmp $                           ; jmp to end
 
 BOOT_DISK: db 0                                     
-splash_message: db "Welcome to the Protected Mode!", 0
+
 
 times 510-($-$$) db 0              
 dw 0xaa55

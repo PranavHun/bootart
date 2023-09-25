@@ -1,0 +1,13 @@
+0000 0000 0000 0000 0000 0000 0000 0000    ; Null Descriptor
+0000 0000 0000 0000 1111 1111 1111 1111    ; 16 base address, 16 segment limit 65535 + upper limit total 1048575
+0000 0000 1100 1111 1001 1010 0000 0000    ; 8 base address 24-31 bits
+                                           ; G - 1 - 4K page granularity
+; DB - 1 - 32 bit
+; 2 - 00 - blank zeros
+; A - 1 - Accessed bit once cpu accesses this is set to 1. It is better to set it yourself in case GDT descriptor is set in read only pages
+; Segment limit 16-19 - 1111 - full 32 bit limit.
+; P - 1 - segment is present
+; DPL - 00 - Ring Privilege level. 00 high 11 low
+; S - 1 - 1 = code segment 0 = system segment
+; Type - 1010 - 1 - Executable or not | 2 - (data segment grows up or down; code only ring access or everyone can run) | 3 - (data is it writable; code is it readable) | 4 - accessed bit (if this segment has been accessed of not by cpu)
+; Base address - 16-23

@@ -1,1 +1,9 @@
-boot
+*
+build/*
+!*.nasm
+!README.md
+!LICENCSE
+!run.sh
+!Makefile
+!GDT_Notes.txt
+!build

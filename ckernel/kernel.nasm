@@ -3,12 +3,11 @@ global _start
 _start:
 [bits 32]
 [extern kmain]
-mov edx, 20
+mov edx, 1024
 
 loop:
 push edx
 push edx
-push 28
 call kmain
 pop edx
 pop edx

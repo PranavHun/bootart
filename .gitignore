@@ -8,4 +8,4 @@ build/*
 !Makefile
 !GDT_Notes.txt
 !build
-!ckernel
+!ckernel*

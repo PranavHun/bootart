@@ -24,5 +24,14 @@ boot_ckernel:
 	i386-elf-ld -o build/full_kernel.bin -Ttext=0x1000 build/kernel.o build/main.o --oformat binary
 	cat build/boot_ckernel_header.bin build/full_kernel.bin build/zeros.bin > build/boot_ckernel
 
+boot_ckernel_graphics:
+	nasm -f bin -o build/zeros.bin ckernel_graphics/zeros.nasm
+	nasm -f bin -o build/boot_ckernel_graphics_header.bin boot_ckernel_graphics.nasm
+	nasm -f elf32 -o build/kernel.o ckernel_graphics/kernel.nasm
+	i386-elf-gcc -ffreestanding -m32 -g -c ckernel_graphics/main.c -o build/main.o
+	i386-elf-ld -o build/full_kernel.bin -Ttext=0x1000 build/kernel.o build/main.o --oformat binary
+	cat build/boot_ckernel_graphics_header.bin build/full_kernel.bin build/zeros.bin > build/boot_ckernel_graphics
+
+
 clean :
 	rm -f build/*

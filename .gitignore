@@ -1,9 +1,11 @@
 *
 build/*
 !*.nasm
+!*.c
 !README.md
 !LICENCSE
 !run.sh
 !Makefile
 !GDT_Notes.txt
 !build
+!ckernel

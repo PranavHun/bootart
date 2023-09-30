@@ -16,7 +16,7 @@ mov sp, bp
 mov bx, KERNEL_ENTRY ; kernel location bytes from origin address 7c00h (End of our kernel code)
 mov dl, [BOOT_DISK]
 mov ah, 0x02    ; int13h function 2
-mov al, 20     ; we want to read 11 sectors 
+mov al, 27     ; we want to read 11 sectors 
               ; 1 - 0 - Boot 
               ; 2 - 0x500 - Kernel_Entry asm
               ; 3 - 0x1000 - Kernel C main

@@ -1,11 +1,12 @@
 *
 build/*
+!ckernel*
 !*.nasm
 !*.c
+!*.py
+!*.inc
 !README.md
 !LICENCSE
 !run.sh
 !Makefile
 !GDT_Notes.txt
-!build
-!ckernel*
